@@ -38,3 +38,8 @@
   - แสดงการ์ดพยากรณ์อากาศรายวัน (ช่วงเวลา 12:00)
 
 ---
+## ดูผลลัพธ์
+### [เปิดหน้าเว็บ](https://glittery-entremet-50e1db.netlify.app/)
+
+#
+## [เอกสาร](https://docs.google.com/document/d/1CkBsPqXEGCGwgipGnpByEeNlSO5KxhsWF2_sGRFt8fw/edit?usp=sharing)
