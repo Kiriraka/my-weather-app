@@ -1,56 +1,86 @@
-const apiKey = '09da788b1ac7bc23e707c351352a2a6a'; // << วาง API Key ที่คัดลอกมาที่นี่
+const apiKey = "09da788b1ac7bc23e707c351352a2a6a"; // ใส่ API Key ของคุณตรงนี้
 
-const searchForm = document.querySelector('#search-form');
-const cityInput = document.querySelector('#city-input');
-const weatherInfoContainer = document.querySelector('#weather-info-container');
+const form = document.getElementById("search-form");
+const cityInput = document.getElementById("city-input");
+const weatherInfo = document.getElementById("weather-info-container");
+const forecastContainer = document.getElementById("forecast-container");
 
-searchForm.addEventListener('submit', (event) => {
-    event.preventDefault(); // ป้องกันไม่ให้หน้าเว็บรีโหลดเมื่อกด submit
-
-    const cityName = cityInput.value.trim(); // .trim() เพื่อตัดช่องว่างหน้า-หลัง
-
-    if (cityName) {
-        getWeather(cityName);
-    } else {
-        alert('กรุณาป้อนชื่อเมือง');
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const city = cityInput.value.trim();
+    if (city) {
+        fetchWeather(city);
+        fetchForecast(city);
+        saveCity(city);
     }
 });
 
-async function getWeather(city) {
-    // แสดงสถานะ Loading
-    weatherInfoContainer.innerHTML = `<p>กำลังโหลดข้อมูล...</p>`;
+document.addEventListener("DOMContentLoaded", () => {
+    const lastCity = localStorage.getItem("lastCity");
+    if (lastCity) {
+        fetchWeather(lastCity);
+        fetchForecast(lastCity);
+    }
+});
 
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=th`;
+function saveCity(city) {
+    localStorage.setItem("lastCity", city);
+}
 
+async function fetchWeather(city) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=th`;
     try {
-        const response = await fetch(apiUrl);
-
-        if (!response.ok) {
-            throw new Error('ไม่พบข้อมูลเมืองนี้');
-        }
-
-        const data = await response.json();
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("ไม่พบข้อมูลเมือง");
+        const data = await res.json();
         displayWeather(data);
-
+        changeBackground(data.weather[0].main);
     } catch (error) {
-        weatherInfoContainer.innerHTML = `<p class="error">${error.message}</p>`;
+        weatherInfo.innerHTML = `<p class="error">${error.message}</p>`;
     }
 }
 
 function displayWeather(data) {
-    // ใช้ Destructuring เพื่อดึงค่าที่ต้องการออกจาก Object
-    const { name, main, weather } = data;
-    const { temp, humidity } = main;
-    const { description, icon } = weather[0];
-
-    // ใช้ Template Literals ในการสร้าง HTML
-    const weatherHtml = `
-        <h2>${name}</h2>
-        <img src="https://openweathermap.org/img/wn/${icon}@2x.png" alt="${description}">
-        <p class="temp">${temp.toFixed(1)}°C</p>
-        <p>${description}</p>
-        <p>ความชื้น: ${humidity}%</p>
+    const html = `
+        <h2 class="fade-in">${data.name}, ${data.sys.country}</h2>
+        <p class="temp fade-in">${Math.round(data.main.temp)}°C</p>
+        <p class="fade-in">${data.weather[0].description}</p>
+        <p class="fade-in">ความชื้น: ${data.main.humidity}% | ลม: ${data.wind.speed} m/s</p>
     `;
+    weatherInfo.innerHTML = html;
+}
 
-    weatherInfoContainer.innerHTML = weatherHtml;
+async function fetchForecast(city) {
+    const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=th`;
+    try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("ไม่พบข้อมูลพยากรณ์");
+        const data = await res.json();
+        displayForecast(data);
+    } catch (error) {
+        forecastContainer.innerHTML = `<p class="error">${error.message}</p>`;
+    }
+}
+
+function displayForecast(data) {
+    const daily = data.list.filter(item => item.dt_txt.includes("12:00:00"));
+    const forecastHTML = daily.map(item => `
+        <div class="forecast-card fade-in">
+            <p>${new Date(item.dt_txt).toLocaleDateString("th-TH", { weekday: "short", day: "numeric", month: "short" })}</p>
+            <p>${item.weather[0].description}</p>
+            <p>${Math.round(item.main.temp)}°C</p>
+        </div>
+    `).join("");
+    forecastContainer.innerHTML = forecastHTML;
+}
+
+function changeBackground(weatherMain) {
+    document.body.classList.remove("sunny", "rainy", "cloudy");
+    if (weatherMain.includes("Clear")) {
+        document.body.classList.add("sunny");
+    } else if (weatherMain.includes("Rain")) {
+        document.body.classList.add("rainy");
+    } else if (weatherMain.includes("Cloud")) {
+        document.body.classList.add("cloudy");
+    }
 }
