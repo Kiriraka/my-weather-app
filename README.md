@@ -1,4 +1,4 @@
-# Weather App
+# LAB-07:Frontend Development with Modern JavaScript (ES6+) P1
 
 เว็บแอปเช็คสภาพอากาศ ใช้ **OpenWeatherMap API**  
 พร้อมฟีเจอร์: พยากรณ์ล่วงหน้า, เปลี่ยนพื้นหลังตามสภาพอากาศ, และบันทึกการค้นหาล่าสุด  
