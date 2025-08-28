@@ -39,7 +39,7 @@
 
 ---
 ## ดูผลลัพธ์
-### [เปิดหน้าเว็บ](https://glittery-entremet-50e1db.netlify.app/)
+### [เปิดหน้าเว็บ](https://enchanting-chebakia-19cfe2.netlify.app/)
 
 #
 ## [เอกสาร](https://docs.google.com/document/d/1CkBsPqXEGCGwgipGnpByEeNlSO5KxhsWF2_sGRFt8fw/edit?usp=sharing)
