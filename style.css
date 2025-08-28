@@ -7,18 +7,16 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    transition: background 1s ease-in-out;
 }
 
 .app-container {
-    background: rgba(0, 53, 84, 0.85);
+    background: #003554;
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     width: 90%;
-    max-width: 420px;
+    max-width: 400px;
     text-align: center;
-    animation: fadeIn 1s ease-in-out;
 }
 
 h1 {
@@ -73,40 +71,70 @@ h1 {
     font-weight: bold;
 }
 
-/* Forecast cards */
-.forecast {
+.header-bar {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    border-bottom: 1px solid #006494;
+    padding-bottom: 0.5rem;
 }
-.forecast-card {
-    background: rgba(0,0,0,0.3);
-    padding: 0.75rem;
+
+#refresh-btn {
+    background: none;
+    border: 1px solid #00A6FB;
+    color: #00A6FB;
+    padding: 0.25rem 0.75rem;
     border-radius: 0.5rem;
-    min-width: 80px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+#refresh-btn:hover {
+    background: #00A6FB;
+    color: #051923;
+}
+
+#favorites-container {
+    margin-top: 1rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.weather-card {
+    background: #051923;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    border-left: 5px solid #00A6FB;
+    text-align: left;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.weather-card h3 {
+    margin: 0;
+    color: #E0E1DD;
+}
+
+.weather-card .temp {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.weather-card .remove-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-weight: bold;
+    line-height: 24px;
     text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    animation: fadeIn 1s ease-in-out;
-}
-
-/* Background theme */
-body.sunny {
-    background: linear-gradient(to bottom, #f9d423, #ff4e50);
-}
-body.rainy {
-    background: linear-gradient(to bottom, #005C97, #363795);
-}
-body.cloudy {
-    background: linear-gradient(to bottom, #757F9A, #D7DDE8);
-}
-
-/* Animation */
-.fade-in {
-    animation: fadeIn 0.8s ease-in-out;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
