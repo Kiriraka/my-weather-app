@@ -7,11 +7,11 @@
 
 ## 📂 ไฟล์และฟีเจอร์
     weather-app/
-    │── index.html      # หน้าเว็บหลัก โครงสร้าง UI ของแอป
-    │── style.css       # จัดการ UI, สีพื้นหลัง, animation
-    │── script.js       # ฟังก์ชันหลัก เรียก API, logic ของแอป
+    │── index.html
+    │── style.css    
+    │── script.js
     └── README.md
-
+    
 ---
 ## ดูผลลัพธ์
 ### [เปิดหน้าเว็บ](https://enchanting-chebakia-19cfe2.netlify.app/)
